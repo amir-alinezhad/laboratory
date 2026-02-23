@@ -1,8 +1,18 @@
 <?php
 
+use App\Http\Controllers\Auth\Dentist\DentistAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+
+// Dentist Auth
+Route::prefix('dentist')->group(function () {
+    Route::post('/register', [DentistAuthController::class, 'Register']);
+    Route::post('/login',    [DentistAuthController::class, 'login']);
+
+    // Protected
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/logout', [DentistAuthController::class, 'logout']);
+        Route::get('/dashboard', [DentistAuthController::class, 'dashboard']);
+    });
+});

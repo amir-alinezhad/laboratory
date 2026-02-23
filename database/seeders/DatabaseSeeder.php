@@ -6,6 +6,7 @@ use App\Models\Status;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,8 +35,26 @@ class DatabaseSeeder extends Seeder
                 [
                     'name' => 'در انتظار تایید',
                     'class_name' => 'danger',
+                ],
+                [
+                    'name' => 'فعال',
+                    'class_name' => 'success',
+                ],
+                [
+                    'name' => 'غیر فعال',
+                    'class_name' => 'danger',
                 ]
             ]
         );
+        Role::insert([
+            [
+                'name' => 'dentist',
+                'guard_name' => 'web'
+            ],[
+                'name' => 'Lab',
+                'guard_name' => 'web'
+            ],
+
+        ]);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -22,9 +23,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status_id'
     ];
 
-    use HasRoles;
+    use HasRoles, HasApiTokens;
+
+
+     // اضافه کردن HasApiTokens
 
     public function dentist()
     {
@@ -39,6 +44,10 @@ class User extends Authenticatable
     public function notifications()
     {
         return $this->hasMany(Notification::class);
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
     }
 
 
