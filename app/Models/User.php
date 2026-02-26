@@ -23,7 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'status_id'
+        'status_id',
+        'phone',
     ];
 
     use HasRoles, HasApiTokens;

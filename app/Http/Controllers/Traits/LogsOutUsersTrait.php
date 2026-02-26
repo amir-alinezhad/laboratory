@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Auth\Traits;
+namespace App\Http\Controllers\Traits;
 use App\Models\Status;
 
 trait LogsOutUsersTrait{

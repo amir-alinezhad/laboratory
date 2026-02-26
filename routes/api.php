@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\Dentist\DentistAuthController;
+use App\Http\Controllers\DashBoard\DentistDashBoardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,9 @@ Route::prefix('dentist')->group(function () {
     // Protected
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', [DentistAuthController::class, 'logout']);
-        Route::get('/dashboard', [DentistAuthController::class, 'dashboard']);
+        Route::Post('/dashboard', [DentistDashBoardController::class, 'dashboard']);
+        Route::post('/dashboard/search', [DentistDashBoardController::class, 'search']);
+        Route::post('/dashboard/notifications', [DentistDashBoardController::class, 'notification']);
+
     });
 });

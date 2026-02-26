@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth\Dentist;
 
-use App\Http\Controllers\Auth\Traits\LogsInUsersTrait;
-use App\Http\Controllers\Auth\Traits\LogsOutUsersTrait;
-use App\Http\Controllers\Auth\Traits\RegistersUsersTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\LogsInUsersTrait;
+use App\Http\Controllers\Traits\LogsOutUsersTrait;
+use App\Http\Controllers\Traits\RegistersUsersTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -40,11 +40,14 @@ class DentistAuthController extends Controller
             $user = $this->performRegister($validation);
 
             auth()->login($user);
+            $token = $user->createToken('auth_token')->plainTextToken;
 
             DB::commit();
 
             return response()->json([
-                'message' => 'ثبت نام موفق بود'
+                'message' => 'ثبت نام موفق بود',
+                'token'   => $token,
+                'user'    => $user
             ], 201);
 
         } catch (\Exception $e) {
@@ -60,7 +63,7 @@ class DentistAuthController extends Controller
     public function login(Request $request)
     {
         try {
-            DB::beginTransaction();
+               DB::beginTransaction();
             $credentials = $request->validate([
                 'phone'    => 'required|digits:11',
                 'password' => 'required|min:6',
@@ -105,4 +108,5 @@ class DentistAuthController extends Controller
     {
       $this->logoutUser($request);
     }
+
 }

@@ -1,8 +1,7 @@
 <?php
-namespace App\Http\Controllers\Auth\Traits;
+namespace App\Http\Controllers\Traits;
 use App\Http\Enums\StatusEnums;
 use App\Models\Dentist;
-use App\Models\Lab;
 use App\Models\Status;
 use App\Models\User;
 
@@ -23,16 +22,20 @@ trait RegistersUsersTrait{
 
         // همه به صورت پیشفرض dentist
         $user->assignRole('dentist');
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-            Dentist::create([
+        Dentist::create([
                 'user_id' => $user->id,
                 'created_at' => now(),
                 'clinic_name' =>$data['clinicName'],
                 'address' =>$data['address'],
             ]);
 
-
-        return $user;
+return $user;
+//        return [
+//            'user'  => $user,
+//            'token' => $token
+//        ];
     }
 
     public function activeStatus()
